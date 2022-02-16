@@ -6,27 +6,42 @@
 
 // GAME FUNCTIONS
 
+let fightOrSkip = function() {
+  // ask player if they would like to fight or run
+  let promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+
+  // Conditional Recursive Function Call
+  if (!promptFight) {
+    window.alert("You need to provide a valid answer! Please try again.");
+    return fightOrSkip();
+  }
+
+  promptFight = promptFight.toLowerCase();
+  // If player chooses to skip confirm and stop the loop
+  if (promptFight === "skip") {
+    // confirm player wants to skip
+    let confirmSkip = window.confirm("Are you sure you'd like to quit?");
+  
+    //if yes (true), leave fight
+    if (confirmSkip) {
+      window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+      // subtract money from playerInfo.money for skipping
+      playerInfo.money = Math.max(0, playerInfo.money - 10);
+
+      // return true if player wants to leave
+      return true;
+    }
+  }
+  return false;
+}
 // this creates a function named "fight"
 let fight = function(enemy) {
   // repeat and execute as long as the enemy-robot is alive
   while(enemy.health > 0 && playerInfo.health > 0) {
-    // ask player if they would like to fight or run
-    let promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-    
-    // If player chooses to skip confirm and stop the loop
-    if (promptFight === "skip" || promptFight === "SKIP") {
-      // confirm player wants to skip
-      let confirmSkip = window.confirm("Are you sure you'd like to quit?");
-    
-      //if yes (true), leave fight
-      if (confirmSkip) {
-        window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
-        // subtract money from playerInfo.money for skipping
-        playerInfo.money = Math.max(0, playerInfo.money - 10);
-        console.log("playerInfo.money", playerInfo.money);
-        break;
-      }
-    }
+    if (fightOrSkip()) {
+      // if true, leave fight by breaking loop
+      break;
+    };
 
     // generate random damage value based on player's attack power
     let damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);

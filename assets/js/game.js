@@ -4,6 +4,8 @@
 //    * Defeat each enemy-robot
 // "LOSE" - Player robot's health is zero or less
 
+// GAME FUNCTIONS
+
 // this creates a function named "fight"
 let fight = function(enemy) {
   // repeat and execute as long as the enemy-robot is alive
@@ -74,7 +76,7 @@ let startGame = function() {
     if (playerInfo.health > 0) {
       // let player know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
       window.alert ("Welcome to Robot Gladiators! Round " + (i + 1) );
-  
+
       // pick new enemy to fight based on the index of the enemyNames array
       let pickedEnemyObj = enemyInfo[i];
   
@@ -161,14 +163,30 @@ let shop = function() {
 
 // function to generate a random numeric value
 let randomNumber = function(min, max) {
-  let value = Math.floor(Math.random() * (max - min + 1)) + min;
+  let value = Math.floor(Math.random() * (max - min + 1) + min);
 
   return value;
-}
+};
 
-// define playerInfo.name from user input
+// function to set name
+let getPlayerName = function() {
+  let name = "";
+
+  // ADD LOOP HERE WITH PROMPT AND CONDITION
+  while (name === "" || name === null) {
+    name = prompt("What is your robot's name?");
+  }
+
+  console.log("Your robot's name is " + name);
+  return name;
+};
+// END GAME FUNCTIONS
+
+// GAME INFORMATION/VARIABLES
+
+// player information
 let playerInfo = {
-  name: window.prompt("What is your robot's name?"),
+  name: getPlayerName(),
   health: 100,
   attack: 10,
   money: 10,
@@ -197,6 +215,7 @@ let playerInfo = {
   }
 };
 
+// enemy information
 let enemyInfo = [
   {
     name: "Roborto",
@@ -211,6 +230,7 @@ let enemyInfo = [
     attack: randomNumber(10, 14)
   }
 ];
+// END GAME INFORMATION/VARIABLES
 
-// start the game when the page loads
+// RUN GAME
 startGame();
